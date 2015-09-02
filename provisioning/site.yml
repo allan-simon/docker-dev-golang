@@ -1,0 +1,42 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+      home: /home/vagrant
+      document_root: /vagrant
+  environment:
+    APP_DB_NAME: "{{ DBNAME }}"
+    APP_DB_USER_NAME: "{{ DBUSER }}"
+    APP_DB_PASSWORD: "{{ DBPASSWORD }}"
+  pre_tasks:
+    - name: check last APT update time
+      apt: update_cache=yes cache_valid_time=86400
+    - name: Install stuff from Aptitude
+      apt: name={{ item }} state=installed
+      with_items:
+       - git
+       - tig
+       - vim
+       - gcc
+       - gdb
+       - cgdb
+       - bash-completion # Not included in the docker image
+       - make
+       - tree
+       - htop
+       - man-db
+
+    - name: get my uid
+      local_action: command id -u
+      sudo: false
+      register: local_uid
+
+    - name: change container's user to have same uid to not have permission problem
+      user: name=vagrant uid={{ local_uid.stdout }}
+
+  roles:
+    - {role: zsh, sudo: false}
+    - {role: go, sudo: false}
+    - {role: vim, sudo: false}
+#    - postgresql
+#    - {role: app, sudo: false}

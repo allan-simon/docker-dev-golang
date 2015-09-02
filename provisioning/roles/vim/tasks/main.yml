@@ -1,0 +1,75 @@
+---
+- name: copy config files in rc folder
+  copy: src={{ item }} dest={{ home }}/{{ item }}
+  with_items:
+    - .vimrc
+    - .vim
+
+- name: Create ~/src folder
+  file: dest={{ home }}/src/vim-pathogen state=directory
+
+- name: Check out pathogen
+  git:
+      repo=https://github.com/tpope/vim-pathogen.git
+      dest={{ home }}/src/vim-pathogen
+      update=yes
+
+- name: Create ~/.vim/autoload folder
+  file: dest={{ home }}/.vim/autoload state=directory
+
+- name: Symlink pathogen into ~/.vim/autoload
+  file:
+      src={{ home }}/src/vim-pathogen/autoload/pathogen.vim
+      dest={{ home }}/.vim/autoload/pathogen.vim
+      state=link
+#
+
+- name: Check out vim-go
+  git:
+    repo=https://github.com/fatih/vim-go.git
+    dest={{ home }}/src/vim-go
+    update=yes
+- name: Ensure ~/.vim/bundle exists
+  file:
+    dest={{ home }}/.vim/bundle
+    state=directory
+- name: Symlink vim-go to .vim/bundle
+  file:
+    src={{ home }}/src/vim-go
+    dest={{ home }}/.vim/bundle/vim-go
+    state=link
+
+#
+- name: Check out tagbar
+  git:
+    repo=https://github.com/majutsushi/tagbar
+    dest={{ home }}/.vim/bundle/tagbar
+    update=yes
+
+- name: install exuberant-ctags from repo
+  sudo: yes
+  apt: name=exuberant-ctags state=installed
+
+#
+
+- name: Install apt packages for YouCompleteMe vim completion engine
+  sudo: yes
+  apt:
+    name={{ item }} state=latest
+  with_items:
+    - build-essential
+    - cmake
+    - python-dev
+- name: Check out YouCompleteMe
+  git:
+    repo=https://github.com/Valloric/YouCompleteMe.git
+    dest={{ home }}/src/YouCompleteMe
+- name: Symlink YouCompleteMe to ~/vim/bundle
+  file:
+    src={{ home }}/src/YouCompleteMe
+    dest={{ home }}/.vim/bundle/YouCompleteMe
+    state=link
+- name: Compile YouCompleteMe binaries
+  command: ./install.sh --clang-completer
+    chdir={{ home }}/src/YouCompleteMe
+    creates={{ home }}/src/YouCompleteMe/third_party/ycmd/ycm_core.so
