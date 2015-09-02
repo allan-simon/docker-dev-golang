@@ -20,7 +20,7 @@ if ! command -v vagrant &>/dev/null; then
     exit 4
 fi
 
-vagrant provision
+vagrant up --provider=docker
 
 # name of the docker container given by vagrant
 #
