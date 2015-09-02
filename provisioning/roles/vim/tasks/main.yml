@@ -1,9 +1,9 @@
 ---
 - name: copy config files in rc folder
-  copy: src={{ item }} dest={{ home }}/{{ item }}
-  with_items:
-    - .vimrc
-    - .vim
+  copy: src=.vimrc dest={{ home }}/.vimrc
+
+- name: Create ~/.vim folder
+  file: dest={{ home }}/.vim state=directory
 
 - name: Create ~/src folder
   file: dest={{ home }}/src/vim-pathogen state=directory
