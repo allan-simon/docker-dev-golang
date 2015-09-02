@@ -36,9 +36,9 @@ VAGRANT_NAME=$(
 # we name the container so that we can reuse it
 docker commit "$VAGRANT_NAME" go_vim_docker
 
-echo -n "\n\n\n\n\n"
+echo -e "\n\n\n\n\n"
 echo "container go_vim_docker created, you now can either do :"
 echo " * vagrant ssh => if you just need one environment"
 echo " * docker run -d --name YOUR_PROJECT -p YOUR_LOCAL_PORT:22 go_vim_docker => if you need one env by project"
-echo -n "\n\n\n\n\n"
+echo -e "\n\n\n\n\n"
 
