@@ -46,6 +46,7 @@
   with_items:
       - golang.org/x/tools/cmd/oracle
       - github.com/nsf/gocode
+      - github.com/golang/lint/golint
       - github.com/tools/godep
       - github.com/rogpeppe/godef
       - github.com/jstemmer/gotags

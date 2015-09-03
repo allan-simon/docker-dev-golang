@@ -91,28 +91,19 @@ let g:clang_library_path = "/usr/lib/"
 
 colorscheme torte
 
- set hidden
- let g:racer_cmd = "~/github/racer/bin/racer"
- let $RUST_SRC_PATH="~/github/rust/src/"
+let g:go_fmt_command = "goimports"
 
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 
-" java complete
-autocmd Filetype java set omnifunc=javacomplete#Complete
-autocmd Filetype java set completefunc=javacomplete#CompleteParamsInf
-autocmd FileType java,javascript,jsp inoremap <buffer> . .<C-X><C-O><C-P>
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
 
-" android.jar
-let $ANDROID_JAR = '~/Downloads/android-sdk-linux/platforms/android-21/android.jar'
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 
-" cache
-let $JAVACOMPLETE_CACHE = '~/.jcc'
-"Added by android-vim:
-set tags+=/home/allan/.vim/tags
-autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-
-au FileType php set omnifunc=phpcomplete#CompletePHP
-"au FileType php set omnifunc=phpcomplete_extended#CompletePHP
-
-let g:syntastic_java_javac_classpath = "~/perso/verbiste-android/bin/classes:~/Downloads/android-sdk-linux/platforms/android-21/*.jar:~/Downloads/android-sdk-linux/extras/android/support/v7/appcompat/libs/android-support-v7-appcompat.jar:~/Downloads/android-sdk-linux/extras/android/support/v4/android-support-v4.jar"
 
 execute pathogen#infect()
