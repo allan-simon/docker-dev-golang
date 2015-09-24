@@ -50,6 +50,14 @@
   sudo: yes
   apt: name=exuberant-ctags state=installed
 
+
+#
+- name: Checkout abolish
+  git:
+    repo=https://github.com/tpope/vim-abolish.git
+    dest={{ home }}/.vim/bundle/vim-abolish
+    update=yes
+
 #
 
 - name: Install apt packages for YouCompleteMe vim completion engine
