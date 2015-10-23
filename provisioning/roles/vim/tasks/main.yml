@@ -72,6 +72,7 @@
   git:
     repo=https://github.com/Valloric/YouCompleteMe.git
     dest={{ home }}/src/YouCompleteMe
+    force=yes
 - name: Symlink YouCompleteMe to ~/vim/bundle
   file:
     src={{ home }}/src/YouCompleteMe
