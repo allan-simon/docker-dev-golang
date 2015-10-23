@@ -57,6 +57,7 @@ setopt mail_warning
 setopt magic_equal_subst
 setopt numericglobsort
 setopt menu_complete
+setopt prompt_subst
 
 ###################
 ## commands aliases
@@ -109,6 +110,28 @@ alias -g H='|head'
 alias -g T='|tail'
 alias -g tcopt="--types-check --hir-compute --hir-display" ## For Tiger
 
+#########################
+# Git stuff
+########################
+function parse_git_branch {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+function parse_git_status {
+    noupdated=$(
+        git status --porcelain 2> /dev/null |
+        grep -E "^ (M|D)" |
+        wc -l
+    )
+    nocommitted=$(
+        git status --porcelain 2> /dev/null |
+        grep -E "^(M|A|D|R|C)" |
+        wc -l
+    )
+
+    if test $noupdated -gt 0 ; then echo -n "*"; fi
+    if test $nocommitted -gt 0 ; then echo -n "+"; fi
+}
 
 #########
 ## Prompt
@@ -130,7 +153,11 @@ time="%{$fg[$time_color]%}%T"
 host="%B%U%{$fg[$host_color]%}$HOST%u"
 cpath="%B%{$fg[$path_color]%}%20<...<%~"
 end="%{$fg[$reset_color]%}"
-PROMPT="$user $end>> "
+
+#PROMPT="$user $end>> "
+PROMPT=$'$user $(parse_git_branch)$(parse_git_status) $end>> '
+
+# prompt on the right
 RPROMPT="%(?,,%{[01m%}%{[31m%}Err %?%{[0m%})%B$end {$cpath$end}"
 
 # Filename suffixes to ignore during completion
