@@ -26,13 +26,6 @@
        - htop
        - man-db
 
-    - name: get my uid
-      local_action: command id -u
-      sudo: false
-      register: local_uid
-
-    - name: change container's user to have same uid to not have permission problem
-      user: name=vagrant uid={{ local_uid.stdout }}
 
   roles:
     - {role: zsh, sudo: false}

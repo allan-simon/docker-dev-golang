@@ -105,5 +105,7 @@ au FileType go nmap <leader>c <Plug>(go-coverage)
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 
+let g:syntastic_go_checkers = ['go', 'golint', 'govet']
+let g:syntastic_aggregate_errors = 1
 
 execute pathogen#infect()
