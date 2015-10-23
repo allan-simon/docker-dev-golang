@@ -26,9 +26,9 @@
        - htop
        - man-db
 
-
   roles:
     - {role: zsh, sudo: false}
+    - {role: twgit, sudo: false}
     - {role: go, sudo: false}
     - {role: vim, sudo: false}
 #    - postgresql
