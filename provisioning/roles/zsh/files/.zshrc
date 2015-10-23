@@ -221,3 +221,12 @@ HISTFILE=~/.history
 HISTSIZE=100000000
 SAVEHIST=100000000
 export HISTFILE SAVEHIST
+
+##########################
+# Docker specific things
+##########################
+
+# /etc/container_environment is created by the base image's init
+# so that we have access to the docker environments variable
+# from within the interactive shell
+sudo cat /etc/container_environment.sh | grep -v 'export _=' | source /dev/stdin
