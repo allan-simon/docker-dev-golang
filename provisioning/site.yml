@@ -4,10 +4,6 @@
   vars:
       home: /home/vagrant
       document_root: /vagrant
-  environment:
-    APP_DB_NAME: "{{ DBNAME }}"
-    APP_DB_USER_NAME: "{{ DBUSER }}"
-    APP_DB_PASSWORD: "{{ DBPASSWORD }}"
   pre_tasks:
     - name: check last APT update time
       apt: update_cache=yes cache_valid_time=86400
